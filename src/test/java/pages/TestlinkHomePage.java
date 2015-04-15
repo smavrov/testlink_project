@@ -18,11 +18,11 @@ public class TestlinkHomePage {
     }
 
     public void logout() {
-        driver.findElement(Logout).click();
+        driver.switchTo().defaultContent().switchTo().frame("titlebar").findElement(Logout).click();
     }
 
     public TestplanManagementPage openTestPlanManagement() {
-        driver.findElement(TestPlanManagementLink).click();
+        driver.switchTo().frame("mainframe").findElement(TestPlanManagementLink).click();
         return new TestplanManagementPage(driver);
     }
 

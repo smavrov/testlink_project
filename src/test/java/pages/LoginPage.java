@@ -3,6 +3,7 @@ package pages;
 import models.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 
 /**
  * Created by admin on 08.04.2015.
