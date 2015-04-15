@@ -8,16 +8,23 @@ import org.openqa.selenium.WebDriver;
  */
 public class TestlinkHomePage {
 
-    WebDriver driver;
+    private WebDriver driver;
 
-    private static final By logout = By.linkText("Выход");
+    private static final By TestPlanManagementLink = By.xpath("//*[@id='test_plan_mgmt_topics']/a[1]");
+    private static final By Logout = By.xpath("//img[contains(@src,'gui/themes/default/images/computer_go.png')]");
 
     public TestlinkHomePage(WebDriver driver) {
         this.driver = driver;
     }
 
     public void logout() {
-
+        driver.findElement(Logout).click();
     }
+
+    public TestplanManagementPage openTestPlanManagement() {
+        driver.findElement(TestPlanManagementLink).click();
+        return new TestplanManagementPage(driver);
+    }
+
 
 }
