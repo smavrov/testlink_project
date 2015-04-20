@@ -41,11 +41,11 @@ public class TestSuiteTest {
         Assert.assertTrue(createTestSuite(testSuite));
         Assert.assertTrue(createTestCase(testSuite, testCase));
         Assert.assertTrue(addTestStep(testSuite, testCase));
-        deleteTestSuite(testSuite);
     }
 
     @AfterTest
     public void shutEnv() {
+        deleteTestSuite(testSuite);
         if (driver != null)
             driver.quit();
     }
