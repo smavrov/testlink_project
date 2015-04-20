@@ -18,7 +18,7 @@ public class TestCaseEditPage extends AbstractPage {
     private static final String xpandBtnPathMinus = "//ul[@class='x-tree-node-ct']//*[contains(text(), '%s')]/ancestor::div/img[@class='x-tree-ec-icon x-tree-elbow-end-minus']";
     private static final String testCasePath = "//*[contains(text(), '%s')]";
     private static final By saveStepButton = By.id("do_update_step");
-    private static final String stepText = "//*[contains(text(), '%s')]";
+    private static final String stepText = "//*[@id='step_row_1']//p[contains(text(), '%s')]";
     private static final By summaryFrame = By.xpath("//td[@id='cke_contents_summary']/iframe");
     private static final By preconditionsFrame = By.xpath("//td[@id='cke_contents_preconditions']/iframe");
     private static final By stepsFrame = By.xpath("//td[@id='cke_contents_steps']/iframe");
@@ -38,7 +38,7 @@ public class TestCaseEditPage extends AbstractPage {
         driver.findElement(createButton).click();
     }
 
-    public void addSteps(TestCase testCase, TestSuite testSuite) {
+    public void createNewStep(TestCase testCase, TestSuite testSuite) {
         By xpandButtonPlus = By.xpath(String.format(xpandBtnPathPlus, testSuite.name));
         By xpandButtonMinus = By.xpath(String.format(xpandBtnPathMinus, testSuite.name));
         By testCaseLink = By.xpath(String.format(testCasePath, testCase.name));
@@ -48,10 +48,18 @@ public class TestCaseEditPage extends AbstractPage {
         Frames.switchToParentFrame(driver);
         Frames.switchToWorkFrame(driver);
         driver.findElement(createStepButton).click();
-        driver.switchTo().frame(driver.findElement(stepsFrame));
-        driver.findElement(descriptionField).sendKeys(testCase.step1);
-        Frames.switchToParentFrame(driver);
-        driver.findElement(saveStepButton).click();
+    }
+
+    public void addStep(TestCase testCase) {
+        try {
+            driver.switchTo().frame(driver.findElement(stepsFrame));
+            Thread.sleep(500);
+            driver.findElement(descriptionField).sendKeys(testCase.step1);
+            Frames.switchToParentFrame(driver);
+            driver.findElement(saveStepButton).click();
+        } catch (InterruptedException e) {
+
+        }
     }
 
     public boolean isStepPresent(TestCase testCase) {

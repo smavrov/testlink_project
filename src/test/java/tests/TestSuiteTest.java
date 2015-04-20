@@ -4,12 +4,13 @@ import models.TestCase;
 import models.TestSuite;
 import models.User;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.*;
+import webdriver.Browser;
+import webdriver.WebDriverFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -26,10 +27,11 @@ public class TestSuiteTest {
 
     @BeforeTest
     public void userLogin() {
-        driver = new FirefoxDriver();
+        driver = WebDriverFactory.getWebDriver(Browser.FIREFOX);
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login(new User());
     }
@@ -65,7 +67,8 @@ public class TestSuiteTest {
     }
 
     public void addTestStep() {
-        testCaseEditPage.addSteps(testCase, testSuite);
+        testCaseEditPage.createNewStep(testCase, testSuite);
+        testCaseEditPage.addStep(testCase);
     }
 
     public void deleteTestSuite(TestSuite testSuite) {
