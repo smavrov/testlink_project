@@ -50,8 +50,6 @@ public class TestplanTest {
 
     @AfterTest
     public void shutEnv() {
-        //deleteTestPlan(testPlan);
-        logout();
         if (driver != null)
             driver.quit();
     }
