@@ -2,10 +2,8 @@ package tests;
 
 import models.TestPlan;
 import models.User;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -23,37 +21,44 @@ import java.util.concurrent.TimeUnit;
 public class TestplanTest {
 
     WebDriver driver;
+    TestplanManagementPage testplanManagementPage;
+    TestplanEditPage editPage;
+    TestPlan testPlan = new TestPlan();
+
 
     @BeforeTest
     public void userLogin() {
         driver = new FirefoxDriver();
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
         LoginPage loginPage = new LoginPage(driver);
         loginPage.login(new User());
     }
 
     @Test
     public void positiveTestPlanTest() {
-        TestlinkHomePage homepage = new TestlinkHomePage(driver);
-
-        TestplanManagementPage testplanManagementPage = homepage.openTestPlanManagement();
-        TestplanEditPage editPage = testplanManagementPage.createTestPlan();
-
-        TestPlan testPlan = new TestPlan();
-        editPage.createTestPlan(testPlan);
-
+        manageTestPlan();
+        createTestPlan();
         Assert.assertTrue(testplanManagementPage.isTestPlanPresent(testPlan));
         deleteTestPlan(testPlan);
     }
 
     @AfterTest
     public void shutEnv() {
-        //deleteTestPlan(testPlan);
-        logout();
         if (driver != null)
             driver.quit();
+    }
+
+    public void manageTestPlan() {
+        TestlinkHomePage homepage = new TestlinkHomePage(driver);
+
+        testplanManagementPage = homepage.openTestPlanManagement();
+        editPage = testplanManagementPage.createNewTestPlan();
+    }
+
+    public void createTestPlan() {
+        editPage.editTestPlan(testPlan);
     }
 
     public void deleteTestPlan(TestPlan testPlan) {

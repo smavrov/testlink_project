@@ -8,9 +8,7 @@ import org.testng.Assert;
 /**
  * Created by admin on 08.04.2015.
  */
-public class LoginPage {
-
-    private WebDriver driver;
+public class LoginPage extends AbstractPage {
 
     private static final String URL = "http://demo.testlink.org/latest/login.php";
 
@@ -19,7 +17,7 @@ public class LoginPage {
     private static final By loginButton = By.name("login_submit");
 
     public LoginPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
     public void login(User user) {
