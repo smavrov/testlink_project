@@ -5,6 +5,6 @@ package models;
  */
 public class User {
 
-    public String name = "bionictest";
-    public String pass = "123456";
+    public String name = "admin";
+    public String pass = "admin";
 }
