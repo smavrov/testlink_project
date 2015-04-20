@@ -38,12 +38,9 @@ public class TestSuiteTest {
 
     @Test
     public void positiveTestSuiteTest() {
-        createTestSuite();
-        Assert.assertTrue(testSuiteManagementPage.isTestSuitePresent(testSuite));
-        createTestCase();
-        Assert.assertTrue(testSuiteManagementPage.isTestCasePresent(testCase, testSuite));
-        addTestStep();
-        Assert.assertTrue(testCaseEditPage.isStepPresent(testCase));
+        Assert.assertTrue(createTestSuite(testSuite));
+        Assert.assertTrue(createTestCase(testSuite, testCase));
+        Assert.assertTrue(addTestStep(testSuite, testCase));
         deleteTestSuite(testSuite);
     }
 
@@ -53,22 +50,25 @@ public class TestSuiteTest {
             driver.quit();
     }
 
-    public void createTestSuite() {
-        TestlinkHomePage homePage = new TestlinkHomePage(driver);
+    public boolean createTestSuite(TestSuite testSuite) {
+        HomePage homePage = new HomePage(driver);
 
         testSuiteManagementPage = homePage.openTestSpecification();
         testSuiteEditPage = testSuiteManagementPage.createNewTestSuite();
         testSuiteEditPage.editTestSuite(testSuite);
+        return testSuiteManagementPage.isTestSuitePresent(testSuite);
     }
 
-    public void createTestCase() {
+    public boolean createTestCase(TestSuite testSuite, TestCase testCase) {
         testCaseEditPage = testSuiteManagementPage.createTestCase(testSuite);
         testCaseEditPage.editTestCase(testCase);
+        return testSuiteManagementPage.isTestCasePresent(testCase, testSuite);
     }
 
-    public void addTestStep() {
+    public boolean addTestStep(TestSuite testSuite, TestCase testCase) {
         testCaseEditPage.createNewStep(testCase, testSuite);
         testCaseEditPage.addStep(testCase);
+        return testCaseEditPage.isStepPresent(testCase);
     }
 
     public void deleteTestSuite(TestSuite testSuite) {

@@ -9,7 +9,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.LoginPage;
-import pages.TestlinkHomePage;
+import pages.HomePage;
 import pages.TestplanEditPage;
 import pages.TestplanManagementPage;
 
@@ -51,7 +51,7 @@ public class TestplanTest {
     }
 
     public void manageTestPlan() {
-        TestlinkHomePage homepage = new TestlinkHomePage(driver);
+        HomePage homepage = new HomePage(driver);
 
         testplanManagementPage = homepage.openTestPlanManagement();
         editPage = testplanManagementPage.createNewTestPlan();
@@ -67,7 +67,7 @@ public class TestplanTest {
     }
 
     public void logout() {
-        TestlinkHomePage homePage = new TestlinkHomePage(driver);
+        HomePage homePage = new HomePage(driver);
         homePage.logout();
     }
 }
